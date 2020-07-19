@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- font awsm cdn -->
+    <link rel="stylesheet"
+     href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    
+    <!-- Latest compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+   
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   <style>
+     .form-group{
+       display: flex;
+     }
+     @media (max-width: 992px){
+      .form-group{
+       display: block;
+     }
+     }
+     label{
+       width: 8rem;
+     }
+    input{
+      width: 35rem !important;
+   }
+
+   </style>
+<div class="container ">
+  
+  <% if(success){%>
+    <div class="alert <%= theme %>">
+      <strong>Success!</strong> <%= success %>
+    </div>
+    <% } %>
+ 
+  <div class="row  ">
+    
+      <h1 class="text-center">Filter Employee Records</h1>
+<div class="col-md-12 ">
+  <form action="/search/" class="form-horizontal" method="post"  role="form">
+              
+ <div class="col-md-3">
+    <div class="form-group">
+        <label for="name" class="col-md-12 control-label">By Name</label>
+        <div class="col-md-12">
+            <input type="text" id="searchName" class="form-control" name="fltrname" placeholder="Enter Name">
+        </div>
+    </div>
+ </div>
+ <div class="col-md-3">
+    <div class="form-group">
+        <label for="email" class="col-md-12 control-label">By Email</label>
+        <div class="col-md-12">
+            <input type="text" class="form-control" name="fltemail" placeholder="Enter Email">
+        </div>
+    </div>
+ </div>
+ <div class="col-md-3">
+    <div class="form-group">
+        <label for="email" class="col-md-12 control-label">By Employee Type</label>
+        <div class="col-md-12">
+            <select class="form-control" name="fltremptype">
+              <option value=""></option>
+                <option value="Hourly">Hourly</option>
+                <option value="Fixed">Fixed</option>
+              </select></div>
+    </div>
+ </div>
+ <div class="col-md-3">
+    <div class="form-group">
+        <label for="email" class="col-md-12 control-label">&nbsp;</label>
+       
+         <div class="col-md-12">
+            <input type="submit" class="form-control btn btn-primary" name="submit" placeholder="Filter">
+        </div>
+    </div>
+ </div>
+</form>
+</div>
+    </div>
+  </div>
+   
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1 class="text-center"><%= title %></h1>
+
+    <div class=" container">
+      <table class="table table-hover">
+        <thead class="thread thead-dark"> 
+          <tr>
+            <th>Profile Pic</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Employee Type</th>
+            <th>Hourly Rate</th>
+            <th>Total Hours</th>
+            <th>Total Amount</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if(records.length>0){ %>
+            <% records.forEach((datas) =>{ %>
+                <tr>
+                  <td>
+                    <% if (datas.image) { %>
+                    <img src="./uploads/<%= datas.image %>" alt="propic.jpg" width="80">
+                    <% } %>
+                  </td>
+                   <td><%= datas.name %></td>
+                   <td><%= datas.email %></td>
+                   <td><%= datas.etype %></td>
+                   <td><%= datas.hourlyrate %></td>
+                   <td><%= datas.totalHour %></td>
+                   <td><%= datas.total %></td>
+                   <td>
+                     <a  class="btn btn-primary btn-xs" href="/edit/<%= datas._id %>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                     <a class="btn btn-danger btn-xs" href="/delete/<%= datas._id %>"> <i class="fa fa-times" aria-hidden="true"></i> </a>
+                </td>
+                </tr>
+          <%  })}else{ %> 
+            <tr>
+              <td colspan="6"><h5 class="text-center text-danger">No Record Found</h5></td>
+            </tr>
+            <% } %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="container mt-5">
+     <div class="row h-100">
+        <div class="col-sm-12 col-md-8 mx-auto my-auto">
+            <div class="card card-block bg-dark text-white ">
+                <form class="card-body form-horizontal" action="/" 
+                 role="form" method="post" enctype="multipart/form-data">
+                 <p>Error:</p>
+                 <div style="margin-top: 0em;" class="text-center">
+    <p><h4>Employee Details Form</h4></p>
+  </div>
+                    <div class="form-group  ">
+                      <label for="name">Name:</label>
+                      <input type="name" class="form-control" 
+                      placeholder="Enter Your Name"
+                       name="name">
+                    </div>
+                    <div class="form-group  ">
+                      <label for="email">Email address:</label>
+                      <input type="email" class="form-control"
+                       placeholder="Enter email" 
+                      name="email">
+                    </div>
+                    <div class="form-group ">
+                      <label for="etype">Employee Type :</label>
+                      <select class="form-control" name="etype">
+                        <option value="Hourly">Hourly</option>
+                        <option value="Fixed">Fixed</option>
+                      </select>                      
+                    </div>
+                    <div class="form-group ">
+                      <label for="hourlyRate">Hourly Rate :</label>
+                      <input  class="form-control" placeholder="Enter Hourly Rate"
+                       name="hourlyrate">
+                    </div>
+                    
+                    <div class="form-group ">
+                      <label for="totalhr">Total Hour :</label>
+                      <input  class="form-control" placeholder="Enter Total Hour"
+                       name="totalHour">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="icode"> Profile Image</label>
+                     <input type="file" class="form-control" name="file" >
+                  
+                  </div>
+
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>                
+                    </form>
+            </div>
+        </div>
+    </div>
+    </div>
+ <script>
+      //using jquery script
+      $(function(){
+    $('#searchName').autocomplete({
+    source: function(req,res){
+
+      $.ajax({
+        url:"autocomplete/",
+        dataType:"jsonp",
+        type:"GET",
+        data:req,
+        success: function(data){
+         res(data)
+
+        },
+        error: function(err){
+          console.log(err.status);
+        }
+      });
+    },
+
+    minLength:1,
+    select: function(event,ui){
+      if(ui.item){
+        $('#searchName').val(ui.item.label);
+      }
+    }
+
+
+
+    });
+
+      });
+      </script> 
+   
+  
+  </body>
+  </html>
